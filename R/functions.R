@@ -8,6 +8,8 @@
 #' cone_radius(9)
 #' cone_radius(11)
 cone_radius <- function(x) {
+  if (!is.numeric(x)) stop("The x argument must be numeric.")
+
   if (x < 0) {
     return(0)
   } else if (x >= 0 && x < 8) {
@@ -27,6 +29,8 @@ cone_radius <- function(x) {
 #' @return Numeric vector with calculated radii for each x.
 #' @export
 cone_radius_for <- function(x) {
+  if (!is.numeric(x)) stop("The x argument must be numeric.")
+
   result <- numeric(length(x))
   for (i in seq_along(x)) {
     result[i] <- cone_radius(x[i])
@@ -41,6 +45,8 @@ cone_radius_for <- function(x) {
 #' @export
 #' @importFrom purrr map_dbl
 cone_radius_map <- function(x) {
+  if (!is.numeric(x)) stop("The x argument must be numeric.")
+
   purrr::map_dbl(x, cone_radius)
 }
 
@@ -50,6 +56,8 @@ cone_radius_map <- function(x) {
 #' @return Numeric vector with calculated radii for each x.
 #' @export
 cone_radius_sapply <- function(x) {
+  if (!is.numeric(x)) stop("The x argument must be numeric.")
+
   sapply(x, cone_radius)
 }
 
@@ -66,6 +74,8 @@ cone_radius_vectorize <- Vectorize(cone_radius)
 #' @return Numeric vector of squared radii.
 #' @export
 cone_radius_squared <- function(x) {
+  if (!is.numeric(x)) stop("The x argument must be numeric.")
+
   cone_radius_for(x)^2
 }
 
@@ -75,6 +85,8 @@ cone_radius_squared <- function(x) {
 #' @return Numeric vector representing the derivative of cone radius.
 #' @export
 cone_radius_derivative <- function(x) {
+  if (!is.numeric(x)) stop("The x argument must be numeric.")
+
   epsilon <- 0.0001
   (cone_radius_for(x + epsilon) - cone_radius_for(x)) / epsilon
 }
@@ -88,7 +100,6 @@ cone_radius_derivative <- function(x) {
 #' @export
 #' @import shiny
 run_app <- function(api_key) {
-  # UI
   ui <- shiny::fluidPage(
     shiny::titlePanel("Enhanced Weather Forecast and Ice Cream Estimation App"),
     shiny::tabsetPanel(
@@ -98,14 +109,12 @@ run_app <- function(api_key) {
     )
   )
 
-  # Server
   server <- function(input, output, session) {
     city_module_server("city1", api_key)
     city_module_server("city2", api_key)
     city_module_server("city3", api_key)
   }
 
-  # Run the application
   shiny::shinyApp(ui = ui, server = server)
 }
 
@@ -141,7 +150,6 @@ city_module_ui <- function(id) {
 #' @importFrom ggplot2 ggplot aes geom_line labs theme_minimal
 city_module_server <- function(id, api_key) {
   shiny::moduleServer(id, function(input, output, session) {
-    # Fetch weather data when the 'Submit' button is clicked
     weather_data <- shiny::eventReactive(input$submit, {
       shiny::isolate({
         city_name <- input$city
@@ -156,8 +164,7 @@ city_module_server <- function(id, api_key) {
         temps <- forecast_data$list$main$temp
         humidities <- forecast_data$list$main$humidity
         pressures <- forecast_data$list$main$pressure
-        forecast_df <- data.frame(date = dates, temperature = temps, humidity = humidities, pressure = pressures)
-        forecast_df
+        data.frame(date = dates, temperature = temps, humidity = humidities, pressure = pressures)
       })
     })
 
@@ -167,17 +174,12 @@ city_module_server <- function(id, api_key) {
       temperature <- format(weather_data()$temperature[1], digits = 2)
       humidity <- weather_data()$humidity[1]
       pressure <- weather_data()$pressure[1]
-
-      shiny::HTML(
-        paste(
-          "<strong>Current weather in", city, ":</strong><br>",
-          "<ul>",
-          "<li>Temperature: ", temperature, " \u00B0C</li>",
-          "<li>Humidity: ", humidity, " %</li>",
-          "<li>Pressure: ", pressure, " hPa</li>",
-          "</ul>"
-        )
-      )
+      shiny::HTML(paste(
+        "<strong>Current weather in", city, ":</strong><br>",
+        "<ul><li>Temperature: ", temperature, " &deg;C</li>",
+        "<li>Humidity: ", humidity, "%</li>",
+        "<li>Pressure: ", pressure, "hPa</li></ul>"
+      ))
     })
 
     output$forecast_plot <- shiny::renderPlot({
@@ -191,33 +193,41 @@ city_module_server <- function(id, api_key) {
   })
 }
 
-#' Check if the city name is valid by querying the OpenWeatherMap API
+#' Check if a city name is valid by querying the OpenWeatherMap API
 #'
-#' @param city_name Character string of the city name to check.
+#' @description This function checks if a given city name is valid by using the OpenWeatherMap API.
+#' @param city_name Character string representing the name of the city to check.
 #' @param api_key Character string of the OpenWeatherMap API key.
-#' @return Logical TRUE if the city is found, FALSE otherwise.
+#' @return Logical value indicating if the city is valid.
 #' @export
-#' @importFrom httr GET status_code
 check_city_validity <- function(city_name, api_key) {
-  response <- httr::GET("http://api.openweathermap.org/data/2.5/weather", query = list(q = city_name, appid = api_key))
+  if (!is.character(city_name)) stop("The city_name argument must be a character string.")
+
+  response <- httr::GET("http://api.openweathermap.org/data/2.5/weather",
+                        query = list(q = city_name, appid = api_key))
+
   status <- httr::status_code(response)
   return(status == 200)
 }
 
 #' Retrieve the 5-day weather forecast for a specified city
 #'
+#' @description Fetches the 5-day forecast data for a given city from the OpenWeatherMap API.
 #' @param city Character string of the city name to get the forecast for.
 #' @param api_key Character string of the OpenWeatherMap API key.
 #' @param units Character string specifying the units (default is "metric").
-#' @return Data frame containing the forecast data if successful, NULL otherwise.
+#' @return List containing forecast data if successful, or NULL if there's an error.
 #' @export
-#' @importFrom httr GET status_code content
 get_forecast <- function(city, api_key, units = "metric") {
-  response <- httr::GET("http://api.openweathermap.org/data/2.5/forecast", query = list(q = city, appid = api_key, units = units))
+  if (!is.character(city)) stop("The city argument must be a character string.")
+
+  response <- httr::GET("http://api.openweathermap.org/data/2.5/forecast",
+                        query = list(q = city, appid = api_key, units = units))
+
   if (httr::status_code(response) != 200) {
     cat("Forecast request error:", httr::status_code(response), "\n")
     return(NULL)
   }
-  forecast_data <- httr::content(response, "parsed", simplifyDataFrame = TRUE)
-  return(forecast_data)
+
+  httr::content(response, "parsed", simplifyDataFrame = TRUE)
 }

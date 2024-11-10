@@ -14,8 +14,8 @@ get_forecast(city, api_key, units = "metric")
 \item{units}{Character string specifying the units (default is "metric").}
 }
 \value{
-Data frame containing the forecast data if successful, NULL otherwise.
+List containing forecast data if successful, or NULL if there's an error.
 }
 \description{
-Retrieve the 5-day weather forecast for a specified city
+Fetches the 5-day forecast data for a given city from the OpenWeatherMap API.
 }
