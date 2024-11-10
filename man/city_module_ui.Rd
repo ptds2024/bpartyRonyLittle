@@ -2,13 +2,25 @@
 % Please edit documentation in R/functions.R
 \name{city_module_ui}
 \alias{city_module_ui}
-\title{Shiny Module UI for City Weather and Ice Cream Estimation}
+\title{UI Module for City Weather and Ice Cream Estimation}
 \usage{
 city_module_ui(id)
 }
 \arguments{
 \item{id}{Module ID for Shiny namespace.}
 }
+\value{
+A Shiny UI module that includes input fields for city name, weather parameter selection, and plots.
+}
 \description{
+This UI module provides input fields and display areas for city weather and ice cream simulation.
+}
+\details{
 Shiny Module UI for City Weather and Ice Cream Estimation
+}
+\examples{
+\dontrun{shiny::shinyApp(ui = city_module_ui("module_id"), server = function(input, output) {})}
+}
+\author{
+Ronald Medvedev
 }

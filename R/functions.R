@@ -1,5 +1,7 @@
 #' Calculate cone radius based on input x
 #'
+#' @title Calculate Cone Radius
+#' @author Ronald Medvedev
 #' @param x Numeric value indicating the position along the cone's height.
 #' @return Numeric value representing the radius of the cone at position x.
 #' @export
@@ -25,9 +27,13 @@ cone_radius <- function(x) {
 
 #' Vectorized function for cone_radius using for loop
 #'
+#' @title Vectorized Cone Radius with For Loop
+#' @author Ronald Medvedev
 #' @param x Numeric vector.
 #' @return Numeric vector with calculated radii for each x.
 #' @export
+#' @examples
+#' cone_radius_for(c(0, 5, -1))
 cone_radius_for <- function(x) {
   if (!is.numeric(x)) stop("The x argument must be numeric.")
 
@@ -40,10 +46,14 @@ cone_radius_for <- function(x) {
 
 #' Vectorized function for cone_radius using map_dbl from purrr
 #'
+#' @title Vectorized Cone Radius with purrr::map_dbl
+#' @author Ronald Medvedev
 #' @param x Numeric vector.
 #' @return Numeric vector with calculated radii for each x.
 #' @export
 #' @importFrom purrr map_dbl
+#' @examples
+#' cone_radius_map(c(0, 5, -1))
 cone_radius_map <- function(x) {
   if (!is.numeric(x)) stop("The x argument must be numeric.")
 
@@ -52,9 +62,13 @@ cone_radius_map <- function(x) {
 
 #' Vectorized function for cone_radius using sapply
 #'
+#' @title Vectorized Cone Radius with sapply
+#' @author Ronald Medvedev
 #' @param x Numeric vector.
 #' @return Numeric vector with calculated radii for each x.
 #' @export
+#' @examples
+#' cone_radius_sapply(c(0, 5, -1))
 cone_radius_sapply <- function(x) {
   if (!is.numeric(x)) stop("The x argument must be numeric.")
 
@@ -63,16 +77,24 @@ cone_radius_sapply <- function(x) {
 
 #' Vectorized function for cone_radius using Vectorize
 #'
+#' @title Vectorized Cone Radius using Vectorize
+#' @author Ronald Medvedev
 #' @param x Numeric vector.
 #' @return Numeric vector with calculated radii for each x.
 #' @export
+#' @examples
+#' cone_radius_vectorize(c(0, 5, -1))
 cone_radius_vectorize <- Vectorize(cone_radius)
 
 #' Function to compute the square of the cone radius
 #'
+#' @title Square of Cone Radius
+#' @author Ronald Medvedev
 #' @param x Numeric vector.
 #' @return Numeric vector of squared radii.
 #' @export
+#' @examples
+#' cone_radius_squared(c(0, 5))
 cone_radius_squared <- function(x) {
   if (!is.numeric(x)) stop("The x argument must be numeric.")
 
@@ -81,9 +103,12 @@ cone_radius_squared <- function(x) {
 
 #' Function to compute the derivative of the cone radius
 #'
+#' @title Derivative of Cone Radius
 #' @param x Numeric vector.
 #' @return Numeric vector representing the derivative of cone radius.
 #' @export
+#' @examples
+#' cone_radius_derivative(c(5, 0))
 cone_radius_derivative <- function(x) {
   if (!is.numeric(x)) stop("The x argument must be numeric.")
 
@@ -93,12 +118,12 @@ cone_radius_derivative <- function(x) {
 
 #' Run Shiny app for weather and ice cream simulation
 #'
-#' This function launches a Shiny app that allows the user to check the weather forecast
-#' for a city and run a simulation for ice cream consumption.
-#'
+#' @title Run Shiny App for Weather and Ice Cream Simulation
 #' @param api_key Character string of OpenWeatherMap API key.
 #' @export
 #' @import shiny
+#' @examples
+#' \dontrun{run_app("your_api_key")}
 run_app <- function(api_key) {
   ui <- shiny::fluidPage(
     shiny::titlePanel("Enhanced Weather Forecast and Ice Cream Estimation App"),
@@ -120,9 +145,15 @@ run_app <- function(api_key) {
 
 #' Shiny Module UI for City Weather and Ice Cream Estimation
 #'
+#' @title UI Module for City Weather and Ice Cream Estimation
+#' @description This UI module provides input fields and display areas for city weather and ice cream simulation.
+#' @author Ronald Medvedev
 #' @param id Module ID for Shiny namespace.
+#' @return A Shiny UI module that includes input fields for city name, weather parameter selection, and plots.
 #' @export
 #' @importFrom shiny NS tagList textInput selectInput numericInput actionButton htmlOutput plotOutput
+#' @examples
+#' \dontrun{shiny::shinyApp(ui = city_module_ui("module_id"), server = function(input, output) {})}
 city_module_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
@@ -143,11 +174,24 @@ city_module_ui <- function(id) {
 
 #' Shiny Module Server for City Weather and Ice Cream Estimation
 #'
+#' @title Server Module for City Weather and Ice Cream Estimation
+#' @description This server module handles weather data retrieval and visualization based on user input.
+#' @author Ronald Medvedev
 #' @param id Module ID for Shiny namespace.
-#' @param api_key OpenWeatherMap API key.
+#' @param api_key OpenWeatherMap API key for fetching weather data.
+#' @return Shiny server logic for managing city weather data display and simulations based on input.
 #' @export
 #' @importFrom shiny moduleServer eventReactive isolate renderText renderPlot req HTML
 #' @importFrom ggplot2 ggplot aes geom_line labs theme_minimal
+#' @examples
+#' \dontrun{
+#' shiny::shinyApp(
+#'   ui = city_module_ui("module_id"),
+#'   server = function(input, output, session) {
+#'     city_module_server("module_id", api_key = "your_api_key")
+#'   }
+#' )
+#' }
 city_module_server <- function(id, api_key) {
   shiny::moduleServer(id, function(input, output, session) {
     weather_data <- shiny::eventReactive(input$submit, {
@@ -195,11 +239,13 @@ city_module_server <- function(id, api_key) {
 
 #' Check if a city name is valid by querying the OpenWeatherMap API
 #'
-#' @description This function checks if a given city name is valid by using the OpenWeatherMap API.
+#' @title Check City Validity via API
 #' @param city_name Character string representing the name of the city to check.
-#' @param api_key Character string of the OpenWeatherMap API key.
+#' @param api_key Character string of OpenWeatherMap API key.
 #' @return Logical value indicating if the city is valid.
 #' @export
+#' @examples
+#' \dontrun{check_city_validity("Lausanne", "your_api_key")}
 check_city_validity <- function(city_name, api_key) {
   if (!is.character(city_name)) stop("The city_name argument must be a character string.")
 
@@ -212,12 +258,14 @@ check_city_validity <- function(city_name, api_key) {
 
 #' Retrieve the 5-day weather forecast for a specified city
 #'
-#' @description Fetches the 5-day forecast data for a given city from the OpenWeatherMap API.
+#' @title Retrieve 5-Day Weather Forecast
 #' @param city Character string of the city name to get the forecast for.
-#' @param api_key Character string of the OpenWeatherMap API key.
+#' @param api_key Character string of OpenWeatherMap API key.
 #' @param units Character string specifying the units (default is "metric").
 #' @return List containing forecast data if successful, or NULL if there's an error.
 #' @export
+#' @examples
+#' \dontrun{get_forecast("Lausanne", "your_api_key")}
 get_forecast <- function(city, api_key, units = "metric") {
   if (!is.character(city)) stop("The city argument must be a character string.")
 

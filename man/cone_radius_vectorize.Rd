@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{cone_radius_vectorize}
 \alias{cone_radius_vectorize}
-\title{Vectorized function for cone_radius using Vectorize}
+\title{Vectorized Cone Radius using Vectorize}
 \usage{
 cone_radius_vectorize(x)
 }
@@ -14,4 +14,10 @@ Numeric vector with calculated radii for each x.
 }
 \description{
 Vectorized function for cone_radius using Vectorize
+}
+\examples{
+cone_radius_vectorize(c(0, 5, -1))
+}
+\author{
+Ronald Medvedev
 }

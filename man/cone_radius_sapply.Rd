@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{cone_radius_sapply}
 \alias{cone_radius_sapply}
-\title{Vectorized function for cone_radius using sapply}
+\title{Vectorized Cone Radius with sapply}
 \usage{
 cone_radius_sapply(x)
 }
@@ -14,4 +14,10 @@ Numeric vector with calculated radii for each x.
 }
 \description{
 Vectorized function for cone_radius using sapply
+}
+\examples{
+cone_radius_sapply(c(0, 5, -1))
+}
+\author{
+Ronald Medvedev
 }

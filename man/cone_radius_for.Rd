@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{cone_radius_for}
 \alias{cone_radius_for}
-\title{Vectorized function for cone_radius using for loop}
+\title{Vectorized Cone Radius with For Loop}
 \usage{
 cone_radius_for(x)
 }
@@ -14,4 +14,10 @@ Numeric vector with calculated radii for each x.
 }
 \description{
 Vectorized function for cone_radius using for loop
+}
+\examples{
+cone_radius_for(c(0, 5, -1))
+}
+\author{
+Ronald Medvedev
 }

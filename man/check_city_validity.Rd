@@ -2,18 +2,21 @@
 % Please edit documentation in R/functions.R
 \name{check_city_validity}
 \alias{check_city_validity}
-\title{Check if a city name is valid by querying the OpenWeatherMap API}
+\title{Check City Validity via API}
 \usage{
 check_city_validity(city_name, api_key)
 }
 \arguments{
 \item{city_name}{Character string representing the name of the city to check.}
 
-\item{api_key}{Character string of the OpenWeatherMap API key.}
+\item{api_key}{Character string of OpenWeatherMap API key.}
 }
 \value{
 Logical value indicating if the city is valid.
 }
 \description{
-This function checks if a given city name is valid by using the OpenWeatherMap API.
+Check if a city name is valid by querying the OpenWeatherMap API
+}
+\examples{
+\dontrun{check_city_validity("Lausanne", "your_api_key")}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{cone_radius_map}
 \alias{cone_radius_map}
-\title{Vectorized function for cone_radius using map_dbl from purrr}
+\title{Vectorized Cone Radius with purrr::map_dbl}
 \usage{
 cone_radius_map(x)
 }
@@ -14,4 +14,10 @@ Numeric vector with calculated radii for each x.
 }
 \description{
 Vectorized function for cone_radius using map_dbl from purrr
+}
+\examples{
+cone_radius_map(c(0, 5, -1))
+}
+\author{
+Ronald Medvedev
 }

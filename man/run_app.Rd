@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{run_app}
 \alias{run_app}
-\title{Run Shiny app for weather and ice cream simulation}
+\title{Run Shiny App for Weather and Ice Cream Simulation}
 \usage{
 run_app(api_key)
 }
@@ -10,6 +10,8 @@ run_app(api_key)
 \item{api_key}{Character string of OpenWeatherMap API key.}
 }
 \description{
-This function launches a Shiny app that allows the user to check the weather forecast
-for a city and run a simulation for ice cream consumption.
+Run Shiny app for weather and ice cream simulation
+}
+\examples{
+\dontrun{run_app("your_api_key")}
 }

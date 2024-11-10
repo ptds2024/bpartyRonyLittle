@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{cone_radius}
 \alias{cone_radius}
-\title{Calculate cone radius based on input x}
+\title{Calculate Cone Radius}
 \usage{
 cone_radius(x)
 }
@@ -19,4 +19,7 @@ Calculate cone radius based on input x
 cone_radius(5)
 cone_radius(9)
 cone_radius(11)
+}
+\author{
+Ronald Medvedev
 }

@@ -2,15 +2,34 @@
 % Please edit documentation in R/functions.R
 \name{city_module_server}
 \alias{city_module_server}
-\title{Shiny Module Server for City Weather and Ice Cream Estimation}
+\title{Server Module for City Weather and Ice Cream Estimation}
 \usage{
 city_module_server(id, api_key)
 }
 \arguments{
 \item{id}{Module ID for Shiny namespace.}
 
-\item{api_key}{OpenWeatherMap API key.}
+\item{api_key}{OpenWeatherMap API key for fetching weather data.}
+}
+\value{
+Shiny server logic for managing city weather data display and simulations based on input.
 }
 \description{
+This server module handles weather data retrieval and visualization based on user input.
+}
+\details{
 Shiny Module Server for City Weather and Ice Cream Estimation
+}
+\examples{
+\dontrun{
+shiny::shinyApp(
+  ui = city_module_ui("module_id"),
+  server = function(input, output, session) {
+    city_module_server("module_id", api_key = "your_api_key")
+  }
+)
+}
+}
+\author{
+Ronald Medvedev
 }

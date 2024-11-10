@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{cone_radius_derivative}
 \alias{cone_radius_derivative}
-\title{Function to compute the derivative of the cone radius}
+\title{Derivative of Cone Radius}
 \usage{
 cone_radius_derivative(x)
 }
@@ -14,4 +14,7 @@ Numeric vector representing the derivative of cone radius.
 }
 \description{
 Function to compute the derivative of the cone radius
+}
+\examples{
+cone_radius_derivative(c(5, 0))
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{cone_radius_squared}
 \alias{cone_radius_squared}
-\title{Function to compute the square of the cone radius}
+\title{Square of Cone Radius}
 \usage{
 cone_radius_squared(x)
 }
@@ -14,4 +14,10 @@ Numeric vector of squared radii.
 }
 \description{
 Function to compute the square of the cone radius
+}
+\examples{
+cone_radius_squared(c(0, 5))
+}
+\author{
+Ronald Medvedev
 }
