@@ -1,0 +1,37 @@
+---
+title: "Introduction to bpartyRonyLittle"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to bpartyRonyLittle}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+`bpartyRonyLittle` is an R package designed to provide weather forecasting tools and ice cream volume simulation. It includes Shiny apps for visualization and various utility functions.
+
+## Key Features
+
+- Weather data retrieval from OpenWeatherMap.
+- Simulating cone volume based on weather conditions.
+- A user-friendly Shiny app for weather analysis.
+
+## Installation
+
+```{r}
+# Install from GitHub
+devtools::install_github("ptds2024/bpartyRonyLittle")
+```
+
+## Getting Started
+
+```{r}
+library(bpartyRonyLittle)
+
+# Example: Calculate cone radius
+cone_radius(5)
+
+# Run Shiny App
+run_app(api_key = "YOUR_API_KEY")
+```

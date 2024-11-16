@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Using Weather and Ice Cream Tools</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using Weather and Ice Cream Tools</h1>
+
+
+
+<div id="using-weather-and-ice-cream-tools" class="section level1">
+<h1>Using Weather and Ice Cream Tools</h1>
+<p>This tutorial demonstrates how to use the
+<code>bpartyRonyLittle</code> package for weather forecasting and
+simulating ice cream consumption. The package combines weather data and
+simulation tools to estimate ice cream volume for fun and practical use
+cases.</p>
+<hr />
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>First, install the package from GitHub using the
+<code>devtools</code> package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Install the package</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ptds2024/bpartyRonyLittle&quot;</span>)</span></code></pre></div>
+<pre><code>## Using GitHub PAT from the git credential store.</code></pre>
+<pre><code>## Skipping install of &#39;bpartyRonyLittle&#39; from a github remote, the SHA1 (e60381b4) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
+<p>Load the package:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(bpartyRonyLittle)</span></code></pre></div>
+</div>
+<div id="fetching-weather-data" class="section level2">
+<h2>Fetching Weather Data</h2>
+<p>The bpartyRonyLittle package retrieves weather data using the
+OpenWeatherMap API.</p>
+</div>
+<div id="check-city-validity" class="section level2">
+<h2>Check City Validity</h2>
+<p>You can verify if a city is available in the API database using the
+check_city_validity function:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Check if Lausanne is a valid city</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>api_key <span class="ot">&lt;-</span> <span class="st">&quot;388c46f24ed4124776271a0d7e62bbb1&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>is_valid <span class="ot">&lt;-</span> <span class="fu">check_city_validity</span>(<span class="st">&quot;Lausanne&quot;</span>, <span class="at">api_key =</span> api_key)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">print</span>(is_valid)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="fetch-a-5-day-weather-forecast" class="section level2">
+<h2>Fetch a 5-Day Weather Forecast</h2>
+<p>Use the get_forecast function to get detailed weather information for
+the next 5 days:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Fetch weather data for Lausanne</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">get_forecast</span>(<span class="st">&quot;Lausanne&quot;</span>, <span class="at">api_key =</span> api_key)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">head</span>(forecast)</span></code></pre></div>
+<pre><code>## $cod
+## [1] &quot;200&quot;
+## 
+## $message
+## [1] 0
+## 
+## $cnt
+## [1] 40
+## 
+## $list
+##            dt main.temp main.feels_like main.temp_min main.temp_max
+## 1  1731790800      8.21            6.63          8.21          9.13
+## 2  1731801600      8.23            6.48          8.23          8.47
+## 3  1731812400      8.18            6.43          8.18          8.18
+## 4  1731823200      7.98            6.03          7.98          7.98
+## 5  1731834000     10.19            9.12         10.19         10.19
+## 6  1731844800     13.07           11.97         13.07         13.07
+## 7  1731855600     12.71           11.71         12.71         12.71
+## 8  1731866400      9.72            8.39          9.72          9.72
+## 9  1731877200      8.58            7.19          8.58          8.58
+## 10 1731888000      8.34            6.69          8.34          8.34
+## 11 1731898800      8.14            6.24          8.14          8.14
+## 12 1731909600      7.10            4.82          7.10          7.10
+## 13 1731920400      8.67            6.79          8.67          8.67
+## 14 1731931200     10.39            9.23         10.39         10.39
+## 15 1731942000     10.59            9.43         10.59         10.59
+## 16 1731952800      9.17            6.76          9.17          9.17
+## 17 1731963600      7.84            5.27          7.84          7.84
+## 18 1731974400      7.74            5.02          7.74          7.74
+## 19 1731985200      8.78            5.98          8.78          8.78
+## 20 1731996000      8.57            5.54          8.57          8.57
+## 21 1732006800      8.39            4.22          8.39          8.39
+## 22 1732017600      9.47            5.73          9.47          9.47
+## 23 1732028400      9.29            5.56          9.29          9.29
+## 24 1732039200      9.48            5.33          9.48          9.48
+## 25 1732050000      5.41            2.37          5.41          5.41
+## 26 1732060800      5.18            3.33          5.18          5.18
+## 27 1732071600      3.79            0.40          3.79          3.79
+## 28 1732082400      2.61           -0.28          2.61          2.61
+## 29 1732093200      3.18            0.84          3.18          3.18
+## 30 1732104000      4.39            0.86          4.39          4.39
+## 31 1732114800      3.16           -0.21          3.16          3.16
+## 32 1732125600      1.22           -2.02          1.22          1.22
+## 33 1732136400      1.35           -2.64          1.35          1.35
+## 34 1732147200      0.82           -3.34          0.82          0.82
+## 35 1732158000      0.05           -4.35          0.05          0.05
+## 36 1732168800      1.22           -4.00          1.22          1.22
+## 37 1732179600      2.50           -1.70          2.50          2.50
+## 38 1732190400      3.06            0.30          3.06          3.06
+## 39 1732201200      1.06           -0.56          1.06          1.06
+## 40 1732212000      0.86           -1.55          0.86          0.86
+##    main.pressure main.sea_level main.grnd_level main.humidity main.temp_kf
+## 1           1020           1020             962            69        -0.92
+## 2           1020           1020             961            72        -0.24
+## 3           1019           1019             960            76         0.00
+## 4           1018           1018             960            77         0.00
+## 5           1019           1019             961            71         0.00
+## 6           1017           1017             960            59         0.00
+## 7           1016           1016             958            64         0.00
+## 8           1017           1017             959            74         0.00
+## 9           1019           1019             960            80         0.00
+## 10          1019           1019             960            80         0.00
+## 11          1018           1018             960            80         0.00
+## 12          1018           1018             959            84         0.00
+## 13          1018           1018             960            77         0.00
+## 14          1017           1017             959            67         0.00
+## 15          1016           1016             958            66         0.00
+## 16          1016           1016             958            71         0.00
+## 17          1016           1016             958            78         0.00
+## 18          1014           1014             956            80         0.00
+## 19          1012           1012             954            76         0.00
+## 20          1010           1010             952            81         0.00
+## 21          1010           1010             952            90         0.00
+## 22          1007           1007             950            81         0.00
+## 23          1004           1004             947            83         0.00
+## 24          1003           1003             946            88         0.00
+## 25          1010           1010             951            80         0.00
+## 26          1008           1008             950            75         0.00
+## 27          1007           1007             948            84         0.00
+## 28          1008           1008             948            81         0.00
+## 29          1010           1010             950            67         0.00
+## 30          1009           1009             950            59         0.00
+## 31          1010           1010             951            61         0.00
+## 32          1012           1012             952            73         0.00
+## 33          1013           1013             953            99         0.00
+## 34          1014           1014             954            89         0.00
+## 35          1014           1014             954            95         0.00
+## 36          1014           1014             954            84         0.00
+## 37          1012           1012             952            75         0.00
+## 38          1006           1006             947            67         0.00
+## 39           999            999             940            98         0.00
+## 40           998            998             939           100         0.00
+##                               weather all wind.speed wind.deg wind.gust
+## 1  802, Clouds, scattered clouds, 03n  46       2.60      246      3.57
+## 2  802, Clouds, scattered clouds, 03n  38       2.86      241      3.97
+## 3          800, Clear, clear sky, 01n   5       2.84      238      3.92
+## 4          800, Clear, clear sky, 01n   6       3.08      241      4.31
+## 5          800, Clear, clear sky, 01d   6       3.59      246      4.96
+## 6        801, Clouds, few clouds, 02d  17       4.93      237      5.70
+## 7   804, Clouds, overcast clouds, 04d  91       5.11      250      5.99
+## 8   804, Clouds, overcast clouds, 04n  95       2.65      280      3.51
+## 9   804, Clouds, overcast clouds, 04n  99       2.44      285      3.05
+## 10  804, Clouds, overcast clouds, 04n  99       2.74      260      3.35
+## 11    803, Clouds, broken clouds, 04n  77       3.06      258      3.73
+## 12    803, Clouds, broken clouds, 04n  81       3.32      264      3.81
+## 13  804, Clouds, overcast clouds, 04d 100       3.20      253      3.82
+## 14  804, Clouds, overcast clouds, 04d 100       4.78      239      5.11
+## 15  804, Clouds, overcast clouds, 04d 100       5.11      234      5.73
+## 16  804, Clouds, overcast clouds, 04n  99       4.49      250      5.23
+## 17  804, Clouds, overcast clouds, 04n  98       4.15      251      5.14
+## 18  804, Clouds, overcast clouds, 04n  99       4.42      246      5.76
+## 19  804, Clouds, overcast clouds, 04n 100       5.21      236      7.74
+## 20         500, Rain, light rain, 10n 100       5.68      231      8.90
+## 21         500, Rain, light rain, 10d 100       9.40      230     13.31
+## 22         500, Rain, light rain, 10d 100       9.04      215     15.49
+## 23         500, Rain, light rain, 10d 100       8.74      206     15.72
+## 24      501, Rain, moderate rain, 10n 100      10.91      228     17.83
+## 25      501, Rain, moderate rain, 10n 100       3.99      190      4.53
+## 26         500, Rain, light rain, 10n  97       2.26      255      3.66
+## 27    803, Clouds, broken clouds, 04n  75       3.95      275      5.48
+## 28         600, Snow, light snow, 13n  88       2.89      327      3.58
+## 29         600, Snow, light snow, 13d 100       2.40      337      3.34
+## 30         600, Snow, light snow, 13d  98       4.45      286      5.27
+## 31         500, Rain, light rain, 10d  23       3.70      300      4.95
+## 32         600, Snow, light snow, 13n  51       2.98      294      3.84
+## 33               601, Snow, snow, 13n 100       4.03      238      5.50
+## 34               601, Snow, snow, 13n  99       4.10      265      4.69
+## 35         600, Snow, light snow, 13n  72       4.19      253      5.91
+## 36         600, Snow, light snow, 13n  84       6.21      237      9.30
+## 37         500, Rain, light rain, 10d 100       4.84      234      7.16
+## 38  804, Clouds, overcast clouds, 04d 100       2.85      240      4.82
+## 39               601, Snow, snow, 13d 100       1.51        6      2.83
+## 40         602, Snow, heavy snow, 13n 100       2.08        5      1.05
+##    visibility  pop pod              dt_txt   3h    3h
+## 1       10000 0.00   n 2024-11-16 21:00:00   NA    NA
+## 2       10000 0.00   n 2024-11-17 00:00:00   NA    NA
+## 3       10000 0.00   n 2024-11-17 03:00:00   NA    NA
+## 4       10000 0.00   n 2024-11-17 06:00:00   NA    NA
+## 5       10000 0.00   d 2024-11-17 09:00:00   NA    NA
+## 6       10000 0.00   d 2024-11-17 12:00:00   NA    NA
+## 7       10000 0.00   d 2024-11-17 15:00:00   NA    NA
+## 8       10000 0.00   n 2024-11-17 18:00:00   NA    NA
+## 9       10000 0.00   n 2024-11-17 21:00:00   NA    NA
+## 10      10000 0.00   n 2024-11-18 00:00:00   NA    NA
+## 11      10000 0.00   n 2024-11-18 03:00:00   NA    NA
+## 12      10000 0.00   n 2024-11-18 06:00:00   NA    NA
+## 13      10000 0.00   d 2024-11-18 09:00:00   NA    NA
+## 14      10000 0.00   d 2024-11-18 12:00:00   NA    NA
+## 15      10000 0.00   d 2024-11-18 15:00:00   NA    NA
+## 16      10000 0.00   n 2024-11-18 18:00:00   NA    NA
+## 17      10000 0.00   n 2024-11-18 21:00:00   NA    NA
+## 18      10000 0.00   n 2024-11-19 00:00:00   NA    NA
+## 19      10000 0.00   n 2024-11-19 03:00:00   NA    NA
+## 20      10000 0.66   n 2024-11-19 06:00:00 0.62    NA
+## 21       8593 1.00   d 2024-11-19 09:00:00 2.08    NA
+## 22      10000 1.00   d 2024-11-19 12:00:00 2.67    NA
+## 23      10000 1.00   d 2024-11-19 15:00:00 2.90    NA
+## 24       5320 1.00   n 2024-11-19 18:00:00 6.67    NA
+## 25      10000 1.00   n 2024-11-19 21:00:00 6.57    NA
+## 26      10000 1.00   n 2024-11-20 00:00:00 0.44    NA
+## 27      10000 0.00   n 2024-11-20 03:00:00   NA    NA
+## 28      10000 0.34   n 2024-11-20 06:00:00   NA  0.29
+## 29      10000 0.41   d 2024-11-20 09:00:00   NA  0.30
+## 30      10000 0.60   d 2024-11-20 12:00:00   NA  0.61
+## 31      10000 0.34   d 2024-11-20 15:00:00 0.26    NA
+## 32       8736 0.39   n 2024-11-20 18:00:00   NA  0.36
+## 33        622 1.00   n 2024-11-20 21:00:00   NA  3.28
+## 34      10000 1.00   n 2024-11-21 00:00:00   NA  4.12
+## 35        309 1.00   n 2024-11-21 03:00:00   NA  1.13
+## 36      10000 0.98   n 2024-11-21 06:00:00   NA  0.92
+## 37      10000 0.20   d 2024-11-21 09:00:00 0.10    NA
+## 38      10000 0.00   d 2024-11-21 12:00:00   NA    NA
+## 39        180 1.00   d 2024-11-21 15:00:00   NA  4.47
+## 40         91 1.00   n 2024-11-21 18:00:00   NA 16.23
+## 
+## $city
+## $city$id
+## [1] 2659994
+## 
+## $city$name
+## [1] &quot;Lausanne&quot;
+## 
+## $city$coord
+## $city$coord$lat
+## [1] 46.516
+## 
+## $city$coord$lon
+## [1] 6.6328
+## 
+## 
+## $city$country
+## [1] &quot;CH&quot;
+## 
+## $city$population
+## [1] 116751
+## 
+## $city$timezone
+## [1] 3600
+## 
+## $city$sunrise
+## [1] 1731739039
+## 
+## $city$sunset
+## [1] 1731772773</code></pre>
+</div>
+<div id="simulating-cone-volume" class="section level2">
+<h2>Simulating Cone Volume</h2>
+<p>The package includes functions to calculate the radius of an ice
+cream cone over time and simulate its changes.</p>
+</div>
+<div id="calculate-cone-radius" class="section level2">
+<h2>Calculate Cone Radius</h2>
+<p>The cone_radius function computes the radius of a cone based on the
+given input x:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Calculate the radius for a single time point</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>radius <span class="ot">&lt;-</span> <span class="fu">cone_radius</span>(<span class="dv">5</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">print</span>(radius)</span></code></pre></div>
+<pre><code>## [1] 0.625</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Calculate the radius for a sequence of time points</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>radii <span class="ot">&lt;-</span> <span class="fu">cone_radius_for</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">print</span>(radii)</span></code></pre></div>
+<pre><code>##  [1] 0.125000 0.250000 0.375000 0.500000 0.625000 0.750000 0.875000 1.000000
+##  [9] 2.262206 0.000000</code></pre>
+</div>
+<div id="plotting-cone-radius" class="section level2">
+<h2>Plotting Cone Radius</h2>
+<p>You can visualize how the cone’s radius changes over time:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Plot cone radius over time</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>radii <span class="ot">&lt;-</span> <span class="fu">cone_radius_for</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, radii, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Cone Radius Over Time&quot;</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Radius&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="using-the-shiny-app" class="section level2">
+<h2>Using the Shiny App</h2>
+<p>The package includes a Shiny app for interactive weather and ice
+cream analysis. Use the run_app function to launch the app:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># Launch the Shiny app</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">run_app</span>(<span class="at">api_key =</span> api_key)</span></code></pre></div>
+<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
+</div>
+<div id="example-workflow" class="section level2">
+<h2>Example Workflow</h2>
+<p>Here’s a complete example workflow that combines weather data
+retrieval and cone volume simulation:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Step 1: Verify the city</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>is_valid <span class="ot">&lt;-</span> <span class="fu">check_city_validity</span>(<span class="st">&quot;Lausanne&quot;</span>, <span class="at">api_key =</span> api_key)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>is_valid) <span class="fu">stop</span>(<span class="st">&quot;City not found!&quot;</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co"># Step 2: Fetch weather data</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">get_forecast</span>(<span class="st">&quot;Lausanne&quot;</span>, <span class="at">api_key =</span> api_key)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co"># Step 3: Simulate cone radius over 10 time points</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>radii <span class="ot">&lt;-</span> <span class="fu">cone_radius_for</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co"># Step 4: Plot results</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, radii, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">col =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">pch =</span> <span class="dv">16</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Simulated Cone Radius Over Time&quot;</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Radius&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>This tutorial demonstrated how to:</p>
+<ul>
+<li>Fetch weather data using the OpenWeatherMap API.</li>
+<li>Simulate and visualize ice cream cone volume over time.</li>
+<li>Use the Shiny app for interactive analysis.</li>
+</ul>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

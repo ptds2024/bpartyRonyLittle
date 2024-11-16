@@ -1,0 +1,120 @@
+---
+title: "Using Weather and Ice Cream Tools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using Weather and Ice Cream Tools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Using Weather and Ice Cream Tools
+
+This tutorial demonstrates how to use the `bpartyRonyLittle` package for weather forecasting and simulating ice cream consumption. The package combines weather data and simulation tools to estimate ice cream volume for fun and practical use cases.
+
+---
+
+## Installation
+
+First, install the package from GitHub using the `devtools` package:
+
+```{r}
+# Install the package
+devtools::install_github("ptds2024/bpartyRonyLittle")
+```
+
+Load the package:
+```{r}
+library(bpartyRonyLittle)
+```
+
+## Fetching Weather Data
+
+The bpartyRonyLittle package retrieves weather data using the OpenWeatherMap API.
+
+## Check City Validity
+
+You can verify if a city is available in the API database using the check_city_validity function:
+```{r}
+# Check if Lausanne is a valid city
+api_key <- "388c46f24ed4124776271a0d7e62bbb1"
+is_valid <- check_city_validity("Lausanne", api_key = api_key)
+print(is_valid)
+```
+
+## Fetch a 5-Day Weather Forecast
+Use the get_forecast function to get detailed weather information for the next 5 days:
+
+```{r}
+# Fetch weather data for Lausanne
+forecast <- get_forecast("Lausanne", api_key = api_key)
+head(forecast)
+```
+
+## Simulating Cone Volume
+
+The package includes functions to calculate the radius of an ice cream cone over time and simulate its changes.
+
+## Calculate Cone Radius
+
+The cone_radius function computes the radius of a cone based on the given input x:
+
+```{r}
+# Calculate the radius for a single time point
+radius <- cone_radius(5)
+print(radius)
+
+# Calculate the radius for a sequence of time points
+radii <- cone_radius_for(1:10)
+print(radii)
+```
+
+## Plotting Cone Radius
+
+You can visualize how the cone's radius changes over time:
+
+```{r}
+# Plot cone radius over time
+radii <- cone_radius_for(1:20)
+plot(1:20, radii, type = "b", col = "blue", pch = 19,
+     main = "Cone Radius Over Time",
+     xlab = "Time", ylab = "Radius",
+     sub = "This plot shows how cone radius changes over time")
+```
+
+## Using the Shiny App
+
+The package includes a Shiny app for interactive weather and ice cream analysis. Use the run_app function to launch the app:
+
+```{r}
+# Launch the Shiny app
+run_app(api_key = api_key)
+```
+
+## Example Workflow
+Here’s a complete example workflow that combines weather data retrieval and cone volume simulation:
+
+```{r}
+# Step 1: Verify the city
+is_valid <- check_city_validity("Lausanne", api_key = api_key)
+if (!is_valid) stop("City not found!")
+
+# Step 2: Fetch weather data
+forecast <- get_forecast("Lausanne", api_key = api_key)
+
+# Step 3: Simulate cone radius over 10 time points
+radii <- cone_radius_for(1:10)
+
+# Step 4: Plot results
+plot(1:10, radii, type = "b", col = "darkgreen", pch = 16,
+     main = "Simulated Cone Radius Over Time",
+     xlab = "Time", ylab = "Radius",
+     sub = "This plot shows the simulated cone radius over 10 time points.")
+```
+
+## Summary
+
+This tutorial demonstrated how to:
+
+- Fetch weather data using the OpenWeatherMap API.
+- Simulate and visualize ice cream cone volume over time.
+- Use the Shiny app for interactive analysis.
