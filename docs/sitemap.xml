@@ -1,0 +1,21 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/authors.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/404.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/cone_radius.html</loc></url>
+<url><loc>/reference/cone_radius_for.html</loc></url>
+<url><loc>/reference/cone_radius_map.html</loc></url>
+<url><loc>/reference/cone_radius_sapply.html</loc></url>
+<url><loc>/reference/cone_radius_vectorize.html</loc></url>
+<url><loc>/reference/cone_radius_squared.html</loc></url>
+<url><loc>/reference/cone_radius_derivative.html</loc></url>
+<url><loc>/reference/run_app.html</loc></url>
+<url><loc>/reference/city_module_ui.html</loc></url>
+<url><loc>/reference/city_module_server.html</loc></url>
+<url><loc>/reference/check_city_validity.html</loc></url>
+<url><loc>/reference/get_forecast.html</loc></url>
+</urlset>
+
